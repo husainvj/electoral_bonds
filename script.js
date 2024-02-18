@@ -1,7 +1,19 @@
 const data = [
     { name: "Donor1", party: "Party A", amount: 200, year: 2012 },
-    { name: "Donor2", party: "Party B", amount: 500, year: 2014 },
-    { name: "Donor3", party: "Party A", amount: 300, year: 2016 },
+    { name: "Donor2", party: "Party B", amount: 500, year: 2012 },
+    { name: "Donor3", party: "Party C", amount: 300, year: 2012 },
+    { name: "Donor4", party: "Party A", amount: 700, year: 2014 },
+    { name: "Donor5", party: "Party B", amount: 900, year: 2014 },
+    { name: "Donor6", party: "Party C", amount: 100, year: 2014 },
+    { name: "Donor7", party: "Party A", amount: 800, year: 2016 },
+    { name: "Donor8", party: "Party B", amount: 300, year: 2016 },
+    { name: "Donor9", party: "Party C", amount: 600, year: 2016 },
+    { name: "Donor10", party: "Party A", amount: 1300, year: 2018 },
+    { name: "Donor11", party: "Party B", amount: 800, year: 2018 },
+    { name: "Donor12", party: "Party C", amount: 600, year: 2018 },
+    { name: "Donor13", party: "Party A", amount: 1100, year: 2020 },
+    { name: "Donor14", party: "Party B", amount: 500, year: 2020 },
+    { name: "Donor15", party: "Party C", amount: 200, year: 2020 },
     // Add more rows according to the pattern
 ];
 
