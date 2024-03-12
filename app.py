@@ -7,4 +7,4 @@ import seaborn as sns
 bonds=pd.read_csv('assets/bond_details.csv', sep=';')
 party=pd.read_csv('assets/party_details.csv', sep=';')
 
-party
+party   
