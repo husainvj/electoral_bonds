@@ -1,0 +1,9 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#circlePacking, #clickableTreemap, #stackedAreaChart {
+    border: 1px solid #ccc;
+    margin: 20px;
+    padding: 20px;
+}
