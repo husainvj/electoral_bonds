@@ -9,19 +9,13 @@ import plotly.subplots as sp
 import base64
 
 
-data= pd.read_csv("assets/bond_details.csv", sep=";")
+data= pd.read_csv("assets/bond_details.csv", sep=",", parse_dates=["Date_of_Purchase"])
+data["Denomination"] = data["Denomination"].astype(float)
 
+# We group data by purchasers name.
+bonds_tree= data.groupby("Purchaser_Name")["Denomination"].apply(sum).to_dict()  # only use it for a combined analysis of all bonds
 
-
-
-
-
-
-bonds_tree= data.groupby("name_of_purchaser")['denomination'].apply(sum).to_dict()  # only use it for a combined analysis of all projects
-
-
-
-         
+# We can use the following code to create a treemap of the bonds.         
 fig=go.Figure(go.Treemap(labels= list(bonds_tree.keys()), parents= [""]*len(bonds_tree.keys()), values= list(bonds_tree.values()), text= list(bonds_tree.keys()), marker_colors=px.colors.qualitative.Plotly, textinfo="label+text+value"))    
 fig.update_layout(width=750, height=750, margin=dict(l=0, r=0, t=0, b=0))
     
@@ -29,7 +23,7 @@ fig.update_layout(width=750, height=750, margin=dict(l=0, r=0, t=0, b=0))
 
 offline.plot(fig, filename="bonds_map.html", auto_open=True)
 # We have to add a time slider to the map to show the evolution of the bonds over time.
-
+"""
 # We can also add a slider to show the evolution of the bonds over time.
 fig.update_layout(sliders=[
     dict(
@@ -43,3 +37,4 @@ fig.update_layout(sliders=[
         ) for year in data['year'].unique()]
     )
 ])
+"""
