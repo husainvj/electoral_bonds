@@ -26,8 +26,8 @@ app = dash.Dash(__name__)
 
 # App layout
 app.layout = html.Div([
-    dcc.Graph(id='treemap', style={'title': 'Electoral Bonds Bought', 'width': '30 vw', 'height':'45 vh','display': 'inline-block', 'right': '5 vw'}),
-    dcc.Graph(id='treemap_party', style={'title': 'Electoral Bonds Encashed by Parties', 'width': '30 vw', 'height':'45 vh', 'display': 'inline-block', 'right': '45 vw'}),
+    dcc.Graph(id='treemap', style={'width': '30 vw', 'height':'45 vh','display': 'inline-block', 'right': '5 vw'}),
+    dcc.Graph(id='treemap_party', style={'width': '30 vw', 'height':'45 vh', 'display': 'inline-block', 'right': '45 vw'}),
     dcc.RangeSlider(
         id='year-slider',
         min=0,
@@ -37,7 +37,7 @@ app.layout = html.Div([
         step=1,
         allowCross=False
     ),
-    dcc.Graph(id='time-series', style={'title': 'Electoral Bonds Bought Over Time', 'width': '70 vw', 'height':'20 vh', 'right': '0 vw'})    
+    dcc.Graph(id='time-series', style={'width': '70 vw', 'height':'20 vh', 'right': '0 vw'})    
 ])
 
 # Callback to update treemap based on slider input
@@ -61,7 +61,8 @@ def update_figure(selected_time):
         values = list(dict_b.values()),
         textinfo = "label+value"
     ))
-    fig.update_layout( width=700 , height= 700 , margin = dict(t=25, l=25, r=25, b=25))
+    fig.update_layout( margin = dict(t=25, l=25, r=25, b=25))
+    
     return fig
 
 # Callback to update treemap_party based on slider input
@@ -84,7 +85,7 @@ def update_figure(selected_time):
         values = list(dict_p.values()),
         textinfo = "label+value"
     ))
-    fig.update_layout( width=700 , height= 700 , margin = dict(t=25, l=25, r=25, b=25))
+    fig.update_layout( margin = dict(t=25, l=25, r=25, b=25))
     return fig
 
 # Callback to update timeseries based on slider input
@@ -113,7 +114,7 @@ def update_figure(selected_time):
     data = [trace1, trace2, trace3, trace4, trace5]
 
     layout = go.Layout(
-        title='Type of Denominations',
+        #title='Type of Denominations',
         barmode='stack',
         xaxis=dict(title='Time'),       
         yaxis=dict(title='Count'),
