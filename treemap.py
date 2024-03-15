@@ -19,8 +19,6 @@ bonds_tree= data.groupby("Purchaser_Name")["Denomination"].apply(sum).to_dict() 
 fig=go.Figure(go.Treemap(labels= list(bonds_tree.keys()), parents= [""]*len(bonds_tree.keys()), values= list(bonds_tree.values()), text= list(bonds_tree.keys()), marker_colors=px.colors.qualitative.Plotly, textinfo="label+text+value"))    
 fig.update_layout(width=750, height=750, margin=dict(l=0, r=0, t=0, b=0))
     
-
-
 offline.plot(fig, filename="bonds_map.html", auto_open=True)
 # We have to add a time slider to the map to show the evolution of the bonds over time.
 """
