@@ -16,6 +16,9 @@ df_party=pd.read_csv('assets/party_details.csv', sep=',', parse_dates=['Date_of_
 df_party["Denomination"] = df_party["Denomination"].astype(float)
 df_party['Month_Year'] = df_party['Date_of_Encashment'].dt.strftime('%b-%Y')
 
+ele_data=pd.read_csv('assets/Election_dates.csv', sep=',', parse_dates=['Year'])
+#ele_data['shifted_date'] = ele_data.Year + pd.Timedelta(days=-35)
+specific_dates = ele_data.Year.tolist()
 
 # Convert 'date_of_purchase' to datetime and extract the year
 #df['Date_of_Purchase'] = pd.to_datetime(df['date_of_purchase'])
@@ -102,6 +105,10 @@ def update_figure(selected_time):
 
     filtered_df = df.loc[idx_start : idx_end]
 
+    fil_ele_data = ele_data.loc[(ele_data['Year'] >= m_y_start) & (ele_data['Year'] <= m_y_end)]
+
+    
+
     df_grouped = filtered_df.groupby(['Date_of_Purchase', 'Denomination']).size().unstack(fill_value=0)
 
     # Create stacked bar chart
@@ -111,7 +118,14 @@ def update_figure(selected_time):
     trace4 = go.Bar(x=df_grouped.index, y=df_grouped[1000000], name='10 Lakh')
     trace5 = go.Bar(x=df_grouped.index, y=df_grouped[10000000], name='1 Crore')
 
-    data = [trace1, trace2, trace3, trace4, trace5]
+    marker_traces = []
+    for date in fil_ele_data['Year']:
+        marker_trace = go.Scatter(x=[date], y=[550], mode='lines+markers', marker=dict(color='red', size=10), 
+                                  showlegend=False, name=str(fil_ele_data['State'][fil_ele_data['Year'] == date].values), 
+                                  hoverinfo='name', hovertemplate='%{name}')
+        marker_traces.append(marker_trace)
+
+    data = [trace1, trace2, trace3, trace4, trace5] + marker_traces
 
     layout = go.Layout(
         #title='Type of Denominations',
