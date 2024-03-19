@@ -1,5 +1,6 @@
 import pandas as pd
 import dash
+import numpy as np
 from dash import html, dcc, Input, Output
 import plotly.graph_objects as go
 
@@ -9,7 +10,7 @@ df=pd.read_csv('assets/bond_details.csv', sep=',', parse_dates=['Date_of_Purchas
 df["Denomination"] = df["Denomination"].astype(float)
 df['Month_Year'] = df['Date_of_Purchase'].dt.strftime('%b-%Y')
 
-df_party=pd.read_csv('assets/party_details.csv', sep=',', parse_dates=['Date_of_Encashment'])
+df_party=pd.read_csv('assets/party_details.csv', sep=',', parse_dates=['Date_of_Encashment'], date_format="mixed", dayfirst=True)
 df_party["Denomination"] = df_party["Denomination"].astype(float)
 df_party['Month_Year'] = df_party['Date_of_Encashment'].dt.strftime('%b-%Y')
 
@@ -54,7 +55,7 @@ def update_figure(selected_time):
 
     filtered_df = df.loc[idx_start : idx_end]
     
-    dict_b= filtered_df.groupby("Purchaser_Name")["Denomination"].apply(sum).to_dict()
+    dict_b= filtered_df.groupby("Purchaser_Name")["Denomination"].apply(np.sum).to_dict()
     fig = go.Figure(go.Treemap(
         labels = list(dict_b.keys()),
         parents = [""]*len(dict_b.keys()),   #[""]*len(bonds_tree.keys()
@@ -78,7 +79,7 @@ def update_figure(selected_time):
 
     filtered_df = df_party.loc[idx_start : idx_end]
     
-    dict_p= filtered_df.groupby("Name_of_Party")["Denomination"].apply(sum).to_dict()
+    dict_p= filtered_df.groupby("Name_of_Party")["Denomination"].apply(np.sum).to_dict()
     fig = go.Figure(go.Treemap(
         labels = list(dict_p.keys()),
         parents = [""]*len(dict_p.keys()),   #[""]*len(bonds_tree.keys()
@@ -144,4 +145,4 @@ def update_figure(selected_time):
 
 # Run app
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False, port=8051)
